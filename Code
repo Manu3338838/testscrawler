@@ -1,0 +1,27 @@
+import requests
+from bs4 import BeautifulSoup
+
+# Die URL der Webseite, die du crawlen möchtest
+url = "https://example.com"
+
+# Eine Funktion, um alle Links auf einer Seite auszugeben
+def get_links(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+    links = []
+
+    for link in soup.find_all("a"):
+        href = link.get("href")
+        if href and href.startswith("http"):
+            links.append(href)
+
+    return links
+
+# Hauptfunktion zum Crawlen
+def main():
+    links = get_links(url)
+    for link in links:
+        print(link)
+
+if __name__ == "__main__":
+    main()
